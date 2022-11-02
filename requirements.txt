@@ -49,3 +49,4 @@ nltk
 numpy
 plotly
 scipy
+boto3
