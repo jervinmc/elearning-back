@@ -47,3 +47,4 @@ urllib3==1.26.12
 pillow==9.2.0
 nltk
 numpy
+plotly
