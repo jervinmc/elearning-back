@@ -15,9 +15,12 @@ import urllib.request
 from nltk.util import ngrams, pad_sequence, everygrams
 from nltk.tokenize import word_tokenize
 from nltk.lm import MLE, WittenBellInterpolated
+import nltk
 import numpy as np
 import plotly.graph_objects as go
 from scipy.ndimage import gaussian_filter
+
+nltk.download('punkt')
 class ClassRoomFilesView(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['location']
