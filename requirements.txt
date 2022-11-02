@@ -45,7 +45,7 @@ tzdata==2022.4
 uritemplate==4.1.1
 urllib3==1.26.12
 pillow==9.2.0
-nltk
+nltk==3.6.5
 numpy
 plotly
 scipy
