@@ -20,6 +20,7 @@ def nameFile(instance, filename):
 
 
 class ClassRoomFiles(models.Model):
+    results = models.DecimalField(_('results'),max_digits=20, decimal_places=2,default=0.0)
     folder_id = models.IntegerField(_('folder_id'),default=0.0)
     user_id = models.IntegerField(_('user_id'),default=0.0)
     author=models.CharField(_('author'),max_length=255,blank=True,null=True)
