@@ -44,7 +44,7 @@ class viewByStudent(generics.GenericAPIView):
 class viewByCode(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny, )
     def get(self,request,code=None):
-        items = Enrolled.objects.filter(code = code)
+        items = Enrolled.objects.filter(code=code,status='Not Archived')
         items = EnrolledSerializer(items, many=True)
         for x in items.data:
             user = User.objects.filter(id=x['student_id'])

@@ -22,5 +22,6 @@ def nameFile(instance, filename):
 class Enrolled(models.Model):
     student_id = models.IntegerField(_('student_id'),default=0.0)
     code=models.CharField(_('code'),max_length=255,blank=True,null=True)
+    status=models.CharField(_('status'),default='Not Archived',max_length=255,blank=True,null=True)
     class Meta:
         ordering = ["-id"]
