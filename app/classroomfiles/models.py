@@ -25,6 +25,7 @@ class ClassRoomFiles(models.Model):
     user_id = models.IntegerField(_('user_id'),default=0.0)
     author=models.CharField(_('author'),max_length=255,blank=True,null=True)
     file_name=models.CharField(_('file_name'),max_length=255,blank=True,null=True)
+    # category=models.CharField(_('category'),max_length=255,blank=True,null=True)
     percent_from=models.CharField(_('percent_from'),max_length=255,blank=True,null=True)
     files = models.FileField(
         _('files'), upload_to=nameFile, default="uploads/users_placeholder.png")

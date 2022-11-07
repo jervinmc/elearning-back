@@ -33,6 +33,8 @@ class ClassRoomFilesView(viewsets.ModelViewSet):
         s = ClassRoomFilesSerializer(data=res)
         s.is_valid(raise_exception=True)
         s.save()
+        if(res.get('category')=='Modules'):
+            return Response()
         # print(open(res.get('files').path).read())
         listResults = []
         items = ClassRoomFiles.objects.filter(folder_id=res.get('folder_id'))
