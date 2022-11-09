@@ -43,8 +43,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     email=models.CharField(_('email'),max_length=255,unique=True,null=True)
     is_active=models.BooleanField(_('is_active'),default=True)
     account_type=models.CharField(_('account_type'),max_length=255,blank=True,default="Client")
-    # image = models.ImageField(
-    #     _('image'), upload_to=nameFile, default="uploads/users_placeholder.png")
+    image = models.ImageField(
+        _('image'), upload_to=nameFile, default="uploads/users_placeholder.png")
     objects = CustomUserManager()
     def __str__(self):
         return '{}'.format(self.email)
