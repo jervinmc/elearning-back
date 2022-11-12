@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets
 from users.models import User
 from docx import Document
+import docx2txt
 from users.serializers import GetUserSerializer
 import pusher
 import io
@@ -86,6 +87,13 @@ def recognition(url,testfiles):
             train_val = p.text
         for p in test.paragraphs:
             test_val = p.text
+        
+        if(train_val==''):
+            train_val = docx2txt.process(io.BytesIO(myfile))
+        if(test_val==''):
+            test_val = docx2txt.process(io.BytesIO(testFile))
+
+
         print(train_val)
         train_text = re.sub(r"\[.*\]|\{.*\}", "", train_val)
         train_text = re.sub(r'[^\w\s]', "",train_val)
