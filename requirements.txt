@@ -50,3 +50,4 @@ numpy
 plotly
 scipy
 boto3
+python-docx
