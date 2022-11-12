@@ -51,4 +51,4 @@ plotly
 scipy
 boto3
 python-docx
-docx2txt
+docx2txts
