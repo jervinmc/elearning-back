@@ -88,6 +88,9 @@ def recognition(url,testfiles):
         for p in test.paragraphs:
             test_val = p.text
         
+        if(test_val==train_val):
+            return 1.0
+        
         if(train_val==''):
             train_val = docx2txt.process(io.BytesIO(myfile))
         if(test_val==''):
