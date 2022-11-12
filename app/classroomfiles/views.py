@@ -7,8 +7,10 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework import status, viewsets
 from users.models import User
+from docx import Document
 from users.serializers import GetUserSerializer
 import pusher
+import io
 from decouple import config
 import re
 import urllib.request
@@ -41,6 +43,7 @@ class ClassRoomFilesView(viewsets.ModelViewSet):
         items = ClassRoomFilesSerializer(items,many=True)
         for x in items.data:
             if(len(items.data)>1 and x['user_id']!=s.data.get('user_id')):
+                print(x['files'])
                 listResults.append({"result":recognition(s.data.get('files'),x['files']),"name":x['author']})
         
         if(len(listResults)==0):
@@ -68,15 +71,24 @@ class GetFileByProfID(generics.GenericAPIView):
 
 
 def recognition(url,testfiles):
+    
     try:
         link = url
         f = urllib.request.urlopen(link) 
         s = urllib.request.urlopen(testfiles)   
         testFile = s.read()         
         myfile = f.read()
-
-        train_text = re.sub(r"\[.*\]|\{.*\}", "", myfile.decode("utf-8"))
-        train_text = re.sub(r'[^\w\s]', "", myfile.decode("utf-8"))
+        train_val = ""
+        test_val = ""
+        train = Document(io.BytesIO(myfile))
+        test = Document(io.BytesIO(testFile))
+        for p in train.paragraphs:
+            train_val = p.text
+        for p in test.paragraphs:
+            test_val = p.text
+        print(train_val)
+        train_text = re.sub(r"\[.*\]|\{.*\}", "", train_val)
+        train_text = re.sub(r'[^\w\s]', "",train_val)
         n = 4
         training_data = list(pad_sequence(word_tokenize(train_text), n, 
                                         pad_left=True, 
@@ -85,7 +97,7 @@ def recognition(url,testfiles):
         print(len(ngrams))
         model = WittenBellInterpolated(n)
         model.fit([ngrams], vocabulary_text=training_data)
-        test_text = re.sub(r'[^\w\s]', "", testFile.decode("utf-8"))
+        test_text = re.sub(r'[^\w\s]', "", test_val)
         testing_data = list(pad_sequence(word_tokenize(test_text), n, 
                                         pad_left=True,
                                         left_pad_symbol="<s>"))
@@ -94,6 +106,8 @@ def recognition(url,testfiles):
             s = model.score(item, testing_data[i:i+n-1])
             scores.append(s)
         scores_np = np.array(scores)
+        print(scores_np)
         return max(scores_np)
     except Exception as e:
+        print(e)
         return 0.0

@@ -40,7 +40,17 @@ class viewByStudent(generics.GenericAPIView):
                 x['class_name'] = classes.data[0]['class_name']
         return Response(status=status.HTTP_200_OK,data=items.data)
 
-
+class viewByStudentArchived(generics.GenericAPIView):
+    permission_classes = (permissions.AllowAny, )
+    def get(self,request):
+        items = Enrolled.objects.filter(student_id = self.request.user.id,status='Archived')
+        items = EnrolledSerializer(items, many=True)
+        for x in items.data:
+            classes = Classes.objects.filter(code=x['code'])
+            classes = ClassesSerializer(classes,many=True)
+            if(len(classes.data)!=0):
+                x['class_name'] = classes.data[0]['class_name']
+        return Response(status=status.HTTP_200_OK,data=items.data)
 
 class viewByCode(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny, )
