@@ -22,5 +22,6 @@ def nameFile(instance, filename):
 class ClassRoomFolder(models.Model):
     folder_name=models.CharField(_('folder_name'),max_length=255,blank=True,null=True)
     category=models.CharField(_('category'),max_length=255,blank=True,null=True)
+    code=models.CharField(_('code'),max_length=255,blank=True,null=True)
     class Meta:
         ordering = ["-id"]
