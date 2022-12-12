@@ -31,6 +31,7 @@ class ClassRoomFilesView(viewsets.ModelViewSet):
     permissions_class = [permissions.AllowAny]
     serializer_class=ClassRoomFilesSerializer
 
+    #this function is for post method
     def create(self,request):
         res = request.data
         s = ClassRoomFilesSerializer(data=res)
@@ -42,13 +43,14 @@ class ClassRoomFilesView(viewsets.ModelViewSet):
         listResults = []
         items = ClassRoomFiles.objects.filter(folder_id=res.get('folder_id'))
         items = ClassRoomFilesSerializer(items,many=True)
+        #INSERTING DATA 
         for x in items.data:
             if(len(items.data)>1 and x['user_id']!=s.data.get('user_id')):
                 print(x['files'])
                 listResults.append({"result":recognition(s.data.get('files'),x['files']),"name":x['author']})
         
+
         if(len(listResults)==0):
-            print("okayy")
             ClassRoomFiles.objects.filter(id=s.data['id']).update(results=0.0)
         else:
             listResult = []

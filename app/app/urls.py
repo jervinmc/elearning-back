@@ -8,7 +8,7 @@ from users.views import Login,GetUserView,Signup
 from classes.views import AdminViewClasses
 from rest_framework import permissions
 from classroomfiles.views import GetFileByProfID
-from enrolled.views import viewByStudent,viewByCode,viewByStudentArchived
+from enrolled.views import viewByStudent,viewByCode,viewByStudentArchived,DeleteEnroll
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -29,6 +29,7 @@ path('api/v1/admin/', admin.site.urls),
     path('api/v1/auth/user/', GetUserView.as_view(), name='auth_data'),
     path('api/v1/classroomfiles-folderid/<str:folder_id>/', GetFileByProfID.as_view(), name='auth_data'),
     path('api/v1/login/', Login.as_view(), name='token_refresh'),
+    path('api/v1/delete-enroll/', DeleteEnroll.as_view(), name='token_refresh'),
     path('api/v1/login/', Login.as_view(), name='token_refresh'),
     path('api/v1/classes/', include('classes.urls')),
     path('api/v1/classroomfiles/', include('classroomfiles.urls')),

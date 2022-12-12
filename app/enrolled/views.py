@@ -40,6 +40,18 @@ class viewByStudent(generics.GenericAPIView):
                 x['class_name'] = classes.data[0]['class_name']
         return Response(status=status.HTTP_200_OK,data=items.data)
 
+
+
+class DeleteEnroll(generics.GenericAPIView):
+    permission_classes = (permissions.AllowAny, )
+    def post(self,request):
+        res = request.data
+        items = Enrolled.objects.filter(code=res.get('code')).delete()
+        print(res)
+        return Response(status=status.HTTP_200_OK,data=[])
+
+
+
 class viewByStudentArchived(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny, )
     def get(self,request):
